@@ -1,0 +1,22 @@
+{
+  "name": "mes-aides-out",
+  "description": "Exemples d'extraction de données à partir de Mes Aides",
+  "version": "0.1.0",
+  "dependencies": {
+    "body-parser": "^1.9.0",
+    "ejs": "^2.6.1",
+    "express": "~4.15.0",
+    "mustache": "^2.3.0",
+    "mustache-express": "^1.2.6"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/betagouv/mes-aides-out"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": ">=6 <7"
+  },
+  "scripts": {},
+  "license": "AGPL-3.0"
+}

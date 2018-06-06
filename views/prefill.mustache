@@ -1,0 +1,16 @@
+<h1>Data</h1>
+
+<style type="text/css">
+  label {
+    display: block;
+  }
+</style>
+
+<form method="post" action="teleservice">
+  {{#fields}}
+    <label>{{key}}
+      <input name="{{key}}" value="{{value}}" >
+    </label>
+  {{/fields}}
+  <input type="submit" value="Submit">
+</form>
