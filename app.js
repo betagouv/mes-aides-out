@@ -25,12 +25,12 @@ app.get('/secured-data', function (req, res) {
 });
 
 app.get('/prefill', function (req, res) {
-  if (! req.query.callback) {
+  if (! req.query.code) {
     return res.render('prefill', { fields: [] });
   }
 
   rp({
-    uri: req.query.callback,
+    uri: process.env.MES_AIDES_CALLBACK_PREFIX + req.query.code,
     headers: {
         'User-Agent': 'Mes-Aides-Test',
         'Authorization': 'Bearer ' + process.env.MES_AIDES_CALLBACK_TOKEN,
