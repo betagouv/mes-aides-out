@@ -1,0 +1,30 @@
+#!/usr/bin/env php
+<?php
+
+require 'vendor/autoload.php';
+
+use Firebase\JWT\JWT;
+
+function exit_usage() {
+    echo "Too few arguments\n";
+    echo "Usage: bin/encode <id> <token> \n";
+    exit(1);
+}
+
+if ($argc !== 3) {
+    exit_usage();
+}
+
+$id = $argv[1];
+$token = $argv[2];
+
+$payload = [
+    'id' => $id,
+    'scope' => 'localtest',
+    'exp' => time() + (60 * 60),
+];
+
+$jwt = JWT::encode($payload, $token);
+
+echo "JSON Web Token generated!\n\n";
+echo "{$jwt}\n";
