@@ -1,6 +1,6 @@
 <?php
 
-require __DIR__ . '/../basicAuth.php';
+require __DIR__ . '/../src/basicAuth.php';
 
 $prefix = @$_ENV['MES_AIDES_API_PREFIX'] ?: 'https://mes-aides.gouv.fr/api/situations/via/';
 
@@ -20,6 +20,9 @@ $result = getData($prefix, $username, $password, $token);
     </head>
     <body>
         <p>Formulaire pré-rempli&nbsp;: </p>
+        <?php if($result['error']) : ?>
+            <p>Une erreur est apparue&nbsp;: <?php print_r($result['error']) ?></p>
+        <?php endif; ?>
         <form>
         <?php foreach ($result['data'] as $key => $value) : ?>
             <p>

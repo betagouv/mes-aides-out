@@ -10,13 +10,14 @@ function getData($prefix, $username, $password, $token) {
 
     curl_setopt($curl, CURLOPT_TIMEOUT, 1);
     $response = curl_exec($curl);
+    $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
-    if ($response !== false) {
+    if ($response !== false && $httpcode == 200) {
         curl_close($curl);
         return array('data' => json_decode($response, true));
     } else {
         $error = curl_error($curl);
-        $result = array('error' => $error);
+        $result = array('error' => $error ?: json_decode($response, true));
         curl_close($curl);
         return $result;
     }

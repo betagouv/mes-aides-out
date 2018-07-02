@@ -1,6 +1,6 @@
 <?php
 
-require __DIR__ . '/../basicAuth.php';
+require __DIR__ . '/../src/basicAuth.php';
 
 $prefix = 'http://localhost:8001/data.php';
 $username = '';
