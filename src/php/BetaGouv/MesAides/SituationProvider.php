@@ -2,33 +2,40 @@
 
 namespace BetaGouv\MesAides;
 
+use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\Request;
+
 class SituationProvider
 {
-    private $baseUrl;
+    private $client;
     private $username;
     private $password;
 
-    public function __construct($baseUrl, $username, $password)
+    public function __construct($username, $password, Client $client = null)
     {
-        $this->baseUrl = $baseUrl;
         $this->username = $username;
         $this->password = $password;
+
+        if (null === $client) {
+            $client = new Client(['base_uri' => 'https://mes-aides.gouv.fr']);
+        }
+
+        $this->client = $client;
     }
 
     public function fromToken($token)
     {
-        $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, "{$this->baseUrl}/api/situations/via/{$token}");
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        $uri = sprintf('/api/situations/via/%s', $token);
 
-        // TODO Send authentication headers
-        // curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-        // curl_setopt($curl, CURLOPT_USERPWD, "{$this->username}:{$this->password}");
+        $request = new Request('GET', $uri, [
+            'Authorization' => sprintf('%s %s', 'Basic', base64_encode($this->username . ':' . $this->password))
+        ]);
 
-        $response = curl_exec($curl);
-
-        if (false !== $response) {
-            return json_decode($response, true);
+        try {
+            $response = $this->client->get($uri);
+            return json_decode((string) $response->getBody(), true);
+        } catch (\Exception $e) {
+            // TODO Handle Exception
         }
     }
 }

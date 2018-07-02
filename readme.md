@@ -50,3 +50,8 @@ Pour fonctionner il faut spécifier le bon prefix
 MES_AIDES_CALLBACK_PREFIX=http://localhost:3000/data?
 MES_AIDES_CALLBACK_PREFIX=http://localhost:3000/secured-data?
 ```
+
+
+```
+php -S localhost:8000 -t examples/php
+```
