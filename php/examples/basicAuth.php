@@ -19,7 +19,7 @@ $result = getData($prefix, $username, $password, $token);
         <title></title>
     </head>
     <body>
-        <p>Formulaire pré-rempli&nbsp;: </p>
+        <p>Formulaire pré-rempli à partir de <?php echo $prefix ?>&nbsp;: </p>
         <?php if($result['error']) : ?>
             <p>Une erreur est apparue&nbsp;: <?php print_r($result['error']) ?></p>
         <?php endif; ?>

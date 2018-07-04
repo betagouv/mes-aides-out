@@ -14,7 +14,7 @@ $mockData = getData();
         <ul>
           <li><a href="mock.php">mock.php</a> génère un formulaire pré-rempli à partir d'un ensemble de clés/valeurs figé.</li>
           <li><a href="data.php">data.php</a> génère un payload JSON correspondant à cet ensemble de clés/valeurs.</li>
-          <li><a href="localData.php">localData.php</a> génère un formulaire pré-rempli en récupérant les données à partir de <a href="data.php">data.php</a>.</li>
+          <li><a href="localData.php">localData.php</a> génère un formulaire pré-rempli en récupérant les données à partir de <a href="data.php">data.php</a>. NB&nbsp;: Cet endpoint nécessite le lancement d'un second serveur sur le port 8001.</li>
           <li><a href="basicAuth.php">basicAuth.php</a> génère un formulaire pré-rempli à partir du code passé en query param.</li>
         </ul>
 
