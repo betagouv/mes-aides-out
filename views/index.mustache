@@ -1,7 +1,18 @@
-<h1>H1</h1>
+<h1>
+  Téléservice pour {{username}}
+</h1>
 
-<form method="post" action="prefill">
-  <label>Key<input name="key"></label>
-  <label>Value<input name="value"></label>
+<style type="text/css">
+  label {
+    display: block;
+  }
+</style>
+
+<form method="post" action="result">
+  {{#fields}}
+    <label>{{key}}
+      <input name="{{key}}" value="{{value}}" >
+    </label>
+  {{/fields}}
   <input type="submit" value="Submit">
 </form>

@@ -8,35 +8,24 @@ app.set('view engine', 'mustache');
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
+var endpointPrefix = process.env.MES_AIDES_CALLBACK_PREFIX || 'http://localhost:9000/api/situations/via/';
+var username = process.env.MES_AIDES_API_USERNAME || 'local_node_test';
+var password = process.env.MES_AIDES_API_PASSWORD || 'token';
+
 app.get('/', function (req, res) {
-  res.render('index');
-});
-
-app.get('/data', function (req, res) {
-  res.json(req.query);
-});
-
-app.get('/secured-data', function (req, res) {
-  if (req.headers.authorization != 'Bearer ' + process.env.MES_AIDES_CALLBACK_TOKEN) {
-    return res.status(404).send({ error: 'Authorization error' });
-  }
-
-  res.json(req.query);
-});
-
-app.get('/prefill', function (req, res) {
   if (! req.query.code) {
-    return res.render('prefill', { fields: [] });
+    return res.render('index', { fields: [], username: username });
   }
 
   rp({
-    uri: process.env.MES_AIDES_CALLBACK_PREFIX + req.query.code,
+    uri: endpointPrefix + req.query.code,
     headers: {
         'User-Agent': 'Mes-Aides-Test',
-        'Authorization': 'Bearer ' + process.env.MES_AIDES_CALLBACK_TOKEN,
+        'Authorization': 'Basic ' + Buffer(username + ':' + password).toString('base64'),
     },
     json: true
-  }).catch(function() {
+  }).catch(function(response) {
+    console.warn(response.error);
     return [];
   }).then(function(data) {
     var fields = Object.keys(data).map(function(key) {
@@ -45,28 +34,18 @@ app.get('/prefill', function (req, res) {
         value: data[key]
       }
     })
-    res.render('teleservice', { fields: fields });
+    res.render('index', { fields: fields, username: username });
   })
 });
 
-app.post('/prefill', function (req, res) {
+app.post('/result', function (req, res) {
   var data = Object.keys(req.body).map(function(key) {
     return {
       key: key,
       value: req.body[key]
     }
   })
-  res.render('prefill', { fields: data });
-});
-
-app.post('/teleservice', function (req, res) {
-  var data = Object.keys(req.body).map(function(key) {
-    return {
-      key: key,
-      value: req.body[key]
-    }
-  })
-  res.render('teleservice', { fields: data });
+  res.render('result', { fields: data });
 });
 
 app.listen(3000);
