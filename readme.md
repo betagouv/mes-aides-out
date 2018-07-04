@@ -2,4 +2,6 @@
 
 Des exemples d'intégration à l'API sont disponibles dans ce dépôt.
 
-Pour le moment, il y a une implémentation en NodeJS.
+Pour le moment, il y a des implémentations en :
+- NodeJS et
+- PHP basique.
