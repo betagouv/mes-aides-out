@@ -9,6 +9,4 @@ $token = $argv[4];
 
 $result = getData($prefix, $username, $password, $token);
 
-print_r($result)
-
-?>
+print_r($result);
